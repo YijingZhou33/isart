@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* font */
+* {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* container */
+.background-container {
+  @apply bg-gradient-to-r from-indigo-400 via-pink-300 to-sky-300 p-0 m-0 min-h-screen flex justify-center items-center;
+}
+
+.content-container {
+  @apply h-full pt-20 w-full items-center;
+}
+
+/* form */
+.form-container {
+  @apply m-2.5 md:max-sm:px-4 p-2.5 min-w-[60%] max-w-[70%] rounded-[2em] border-2 border-solid border-pink-600 bg-white bg-opacity-50;
+}
+
+.form-title {
+  @apply font-bold text-blue-900 text-3xl text-center my-2.5;
+}
+
+.el-form-item__content {
+  justify-content: space-between;
+}
+
+/* dialog */
+.dialog-image-container {
+  @apply flex justify-center mb-4;
+}
+
+.dialog-description {
+  @apply mb-2 text-center text-gray-700 break-normal mx-auto;
+}
+
+.dialog-title {
+  @apply text-pink-600 font-semibold text-2xl text-center break-normal !important;
+  margin-bottom: -20px;
+}
+
+.el-table td.el-table__cell div {
+  @apply break-normal;
+}
+
+.el-popper {
+  @apply max-w-none px-5;
+}
+
+/* selector */
+.el-select-dropdown__item.selected {
+  @apply text-[#db2777] !important;
+}
