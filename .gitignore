@@ -46,3 +46,6 @@ pnpm-debug.log*
 # Jupyter notebook
 .ipynb_checkpoints
 uniformization/data
+
+# Database
+isart_db.sql
