@@ -106,6 +106,7 @@ const menu = [
     icon: 'fa-user-gear',
     isGroup: false,
   },
+  { title: 'FMEA Overview', pathname: 'fmea', icon: 'fa-outdent', isGroup: false },
   {
     title: 'Failure Mode Database',
     isGroup: true,
@@ -121,7 +122,6 @@ const menu = [
     icon: 'fa-book-bookmark',
     isGroup: false,
   },
-  { title: 'FMEA Overview', pathname: 'fmea', icon: 'fa-outdent', isGroup: false },
   { title: 'My FMEA', pathname: 'fmea', icon: 'fa-folder-plus', isGroup: false },
   { title: 'i-SART Evaluation', pathname: 'fmea', icon: 'fa-comments', isGroup: false },
 ];
