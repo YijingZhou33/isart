@@ -32,7 +32,6 @@ SECRET_KEY = 'SECRET_KEY'
 # --------------------------------------------------------------
 DEBUG = False
 
-
 ALLOWED_HOSTS = ['*']
 
 
@@ -117,8 +116,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'isart_db',
     'USER': 'root',
-    # 'PASSWORD': 'DB_PASSWORD',
-    'PASSWORD': 'root',
+    'PASSWORD': 'DB_PASSWORD',
     'HOST': '127.0.0.1',
     'POST': '3306',
     }
