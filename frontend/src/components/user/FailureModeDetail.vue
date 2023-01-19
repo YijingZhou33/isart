@@ -11,6 +11,7 @@
         <template v-if="breadcrumb.fms_by_subprocess_id">
           <el-breadcrumb-item
             v-if="breadcrumb.fms_by_step_id"
+            @click="breadcrumbClicked = !breadcrumbClicked"
             :to="{ name: 'fm-detail', params: { process_ids: [breadcrumb.fms_by_subprocess_id] } }"
             >{{ PROCESS_STEPS[breadcrumb.fms_by_subprocess_id - 1][0].label }}</el-breadcrumb-item
           >
@@ -59,6 +60,15 @@
                 </el-tooltip>
               </template>
             </el-table-column>
+
+            <!-- Subprocess id -->
+            <template v-else-if="col.name === 'subprocess_id' && breadcrumb.fms_by_subprocess_id === undefined">
+              <el-table-column :prop="col.name" :label="col.label" :width="col.width + 'px'" v-if="true"> </el-table-column>
+            </template>
+
+            <template v-else-if="col.name === 'subprocess_id' && breadcrumb.fms_by_subprocess_id !== undefined">
+              <el-table-column :prop="col.name" :label="col.label" :width="col.width + 'px'" v-if="false"> </el-table-column>
+            </template>
 
             <!-- Step id -->
             <template v-else-if="col.name === 'step_id' && breadcrumb.fms_by_step_id !== undefined">
@@ -173,6 +183,7 @@ let containerRef = ref(null);
 let tableRef = ref(null);
 let username = ref('');
 let hasLogin = ref(false);
+let breadcrumbClicked = ref(false);
 
 const pagination = reactive({
   currentPage: 1,
@@ -192,13 +203,18 @@ const breadcrumb = reactive({
 
 const tableHeader = [
   {
-    name: 'step_id',
-    label: 'Step id',
+    name: 'failure_mode',
+    label: 'Failure mode',
     width: null,
   },
   {
-    name: 'failure_mode',
-    label: 'Failure mode',
+    name: 'subprocess_id',
+    label: 'Subprocess id',
+    width: null,
+  },
+  {
+    name: 'step_id',
+    label: 'Step id',
     width: null,
   },
   {
@@ -207,27 +223,8 @@ const tableHeader = [
     width: null,
   },
   {
-    name: 'updated',
-    label: 'Updated time',
-  },
-  {
     name: 'process_type',
     label: 'Technique',
-    width: null,
-  },
-  // {
-  //   name: 'current_mitigation',
-  //   label: 'Current mitigation',
-  //   width: null,
-  // },
-  {
-    name: 'found_in_other_steps',
-    label: 'Found in other steps',
-    width: null,
-  },
-  {
-    name: 'potential_causes',
-    label: 'Potential causes',
     width: null,
   },
   {
@@ -236,15 +233,44 @@ const tableHeader = [
     width: null,
   },
   {
+    name: 'potential_causes',
+    label: 'Potential causes',
+    width: null,
+  },
+  // {
+  //   name: 'causal_scenario',
+  //   label: 'Causal scenario',
+  //   width: null
+  // },
+  {
     name: 'mitigation_strategy',
     label: 'Mitigation strategy',
     width: null,
   },
+  // {
+  //   name: 'useful_reads',
+  //   label: 'Useful reads',
+  //   width: null
+  // },
   {
-    name: 'software',
-    label: 'Software related to Fms',
-    width: null,
+    name: 'updated',
+    label: 'Updated time',
   },
+  // {
+  //   name: 'software',
+  //   label: 'Software related Fms',
+  //   width: null,
+  // },
+  // {
+  //   name: 'current_mitigation',
+  //   label: 'Current mitigation',
+  //   width: null,
+  // },
+  // {
+  //   name: 'found_in_other_steps',
+  //   label: 'Found in other steps',
+  //   width: null,
+  // },
 ];
 
 const dateRange = {
@@ -392,7 +418,7 @@ const getTableData = (isReloading) => {
             // avoid resizing in breadcrumb
             if (isReloading) {
               // calculate column width based on content
-              calMaxWidth(200, 290, 'mitigation_strategy');
+              calMaxWidth(400, 800, 'mitigation_strategy');
             }
           })
           .catch((err) => console.log(err));
@@ -405,8 +431,11 @@ const getTableData = (isReloading) => {
 
 const mapFields = () => {
   tableData.value.forEach((item) => {
+    // subprocess_id
+    const subprocess_id = item.subprocess_id;
+    item.subprocess_id = PROCESS_STEPS[item.subprocess_id - 1][0].label;
     // step_id
-    item.step_id = PROCESS_STEPS[item.subprocess_id - 1][0].children[item.step_id - 1].label;
+    item.step_id = PROCESS_STEPS[subprocess_id - 1][0].children[item.step_id - 1].label;
     // severity
     const severityIndex = item.severity;
     item.severity = SEVERITY_LEVELS[severityIndex - 1].emoji;
@@ -631,15 +660,15 @@ const calMaxWidth = (maxFixedWidth, extraWidth, maxWidthCol) => {
     }
     totalColWidth += col.width;
   }
-  if (totalColWidth < containerWidth.value) {
-    let maxWidthColIndex = getHeaderIndex(maxWidthCol);
+  if (totalColWidth < containerWidth.value && !breadcrumbClicked.value) {
     tableHeader.forEach((col) => {
-      if (col.name === 'step_id' || col.name === maxWidthColIndex) {
-        col.width += ((containerWidth.value - totalColWidth) / 4) * 1;
-      } else if (col.name === maxWidthColIndex) {
-        col.width += ((containerWidth.value - totalColWidth) / 4) * 1;
+      const extraWidth = (containerWidth.value - totalColWidth) / 4;
+      if (col.name === 'step_id' || col.name === maxWidthCol) {
+        col.width += extraWidth;
+      } else if (col.name === maxWidthCol) {
+        col.width += extraWidth;
       } else if (col.name === 'failure_mode') {
-        col.width += ((containerWidth.value - totalColWidth) / 4) * 2;
+        col.width += extraWidth * 2;
       }
     });
   }
