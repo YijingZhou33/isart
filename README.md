@@ -127,7 +127,7 @@ In the Linux terminal, redirect to ***frontend*** folder
 
 In the Linux terminal, redirect to ***isart*** folder
 
-- Activate it with `source /env/bin/activate`
+- Activate it with `source env/bin/activate`
 - Open another window within the current terminal, restart the Django server
   - Stop the server: `tmux a -t [name] ` + `CRTL + C`
   - Restart the server: `python manage.py runserver`

@@ -25,7 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# --------------------------------------------------------------
+# Uncomment DEBUG = True in development! 
+# Otherwise CSS of admin interface: http://127.0.0.1:8000/admin/ disappear!
+# DEBUG = True
+# --------------------------------------------------------------
 DEBUG = False
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -111,7 +117,8 @@ DATABASES = {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'isart_db',
     'USER': 'root',
-    'PASSWORD': 'DB_PASSWORD',
+    # 'PASSWORD': 'DB_PASSWORD',
+    'PASSWORD': 'root',
     'HOST': '127.0.0.1',
     'POST': '3306',
     }
