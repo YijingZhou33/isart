@@ -108,12 +108,12 @@ const menu = [
   },
   { title: 'FMEA Overview', pathname: 'fmea', icon: 'fa-outdent', isGroup: false },
   {
-    title: 'Failure Mode Database',
+    title: 'Failure Modes Database',
     isGroup: true,
     icon: 'fa-toggle-on',
     subtitle: [
       { title: 'Process Steps', pathname: 'fm-list', icon: 'fa-list-check' },
-      { title: 'Failure Mode List', pathname: 'fm-detail', params: { process_ids: '' }, icon: 'fa-filter' },
+      { title: 'Failure Modes List', pathname: 'fm-detail', params: { process_ids: '' }, icon: 'fa-filter' },
     ],
   },
   {
